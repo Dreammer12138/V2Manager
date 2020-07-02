@@ -43,7 +43,7 @@ $ sudo bash go.sh
 
 ```shell
 downloadV2Ray(){
-	# 从这里开始
+    # 从这里开始
     rm -rf /tmp/v2ray
     mkdir -p /tmp/v2ray
     DOWNLOAD_LINK="https://github.com/v2ray/v2ray-core/releases/download/${NEW_VER}/v2ray-linux-${VDIS}.zip"
