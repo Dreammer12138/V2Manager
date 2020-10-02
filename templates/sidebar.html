@@ -2,9 +2,19 @@
     <div class="row">
         <div class="col p-0">
             <h3 class="text-light p-2">V2Manager</h3>
-            <div class="nav flex-column nav-pills p-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <a class="btn btn-dark text-light focusnoshadow active" data-toggle="pill" href="#config" role="tab" aria-controls="config" aria-selected="true">配置</a>
-                <a class="btn btn-dark text-light focusnoshadow" data-toggle="pill" href="#status" role="tab" aria-controls="status" aria-selected="false">运行状态</a>
+            <div class="nav flex-column nav-pills p-2"
+                 id="v-pills-tab"
+                 role="tablist"
+                 aria-orientation="vertical">
+                 
+                {% for bar in bars %}
+                <a class="btn btn-dark text-light focusnoshadow"
+                   data-toggle="pill" href="#{{ bar.topage }}"
+                   role="tab"
+                   aria-controls="{{ bar.topage }}"
+                   aria-selected="true">{{ bar.topage }}</a>
+                {% endfor %}
+
             </div>
         </div>
     </div>
