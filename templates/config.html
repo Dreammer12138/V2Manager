@@ -11,7 +11,7 @@
                 <div class="col">
                     <div class="form-group row">
                         <label for="V2rayCorePath" class="col-sm-2 col-form-label">V2rayCore 路径</label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-3">
                             <input type="text" class="form-control" id="V2rayCorePath" value="{{ v2raypath }}">
                         </div>
                     </div>
@@ -19,31 +19,24 @@
                 <div class="col">
                     <div class="form-group row">
                         <label for="V2rayLogPath" class="col-sm-2 col-form-label">V2ray日志路径</label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-3">
                             <input type="text" class="form-control" id="V2rayLogPath" value="{{ v2raylogpath }}">
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group row">
-                        <label for="V2rayCorePath" class="col-sm-2 col-form-label">V2ray日志等级</label>
-                        <div class="input-group col-sm-8">
-                            <div class="col-sm-2 p-0 m-0">
-                                <button class="btn btn-outline-secondary dropdown-toggle w-100" id="loglevel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {% if loglevel %}
-                                        {{ loglevel }}
-                                    {% else %}
-                                        Warning
-                                    {% endif %}
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Warning</a>
-                                    <a class="dropdown-item" href="#">Info</a>
-                                    <a class="dropdown-item" href="#">Error</a>
-                                    <a class="dropdown-item" href="#">Debug</a>
-                                    <a class="dropdown-item" href="#">None</a>
-                                </div>
-                            </div>
+                        <label for="loglevel" class="col-sm-2 col-form-label">V2ray日志等级</label>
+                        <div class="col-sm-3">
+                            <select id="loglevel" class="form-control">
+                                {% for level in levels %}
+                                <option value="{{ level }}"
+                                {% if level == loglevel %}
+                                selected="selected"
+                                {% endif %}
+                                >{{ level }}</option>
+                                {% endfor%}
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -63,21 +56,17 @@
                 </div>
                 <div class="col">
                     <div class="form-group row">
-                        <label for="Protocol" class="col-sm-2 col-form-label">协议</label>
-                        <div class="input-group col-sm-8">
-                            <div class="p-0 m-0 col-sm-2">
-                                <button class="btn btn-outline-secondary dropdown-toggle w-100" id="Protocol" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {% if Protocol %}
-                                        {{ protocol }}
-                                    {% else %}
-                                        tcp
-                                    {% endif %}
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">tcp</a>
-                                    <a class="dropdown-item" href="#">mkcp</a>
-                                </div>
-                            </div>
+                        <label for="Protocol" class="col-sm-2 col-form-label">V2ray日志等级</label>
+                        <div class="col-sm-3">
+                            <select id="Protocol" class="form-control">
+                                {% for p in protocols %}
+                                <option value="{{ protocol }}"
+                                {% if level == protocol %}
+                                selected="selected"
+                                {% endif %}
+                                >{{ p }}</option>
+                                {% endfor%}
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -95,21 +84,17 @@
             <div id="DataTransports">
                 <div class="col">
                     <div class="form-group row">
-                        <label for="Data_protocol" class="col-sm-2 col-form-label">传输协议</label>
-                        <div class="input-group col-sm-8">
-                            <div class="col-sm-2 p-0 m-0">
-                                <button class="btn btn-outline-secondary dropdown-toggle w-100" id="Data_protocol" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {% if Data.protocol %}
-                                        {{ Data.protocol }}
-                                    {% else %}
-                                        Vmess
-                                    {% endif %}
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#" onclick="ShadowsocksConfig(this)">Vmess</a>
-                                    <a class="dropdown-item" href="#" onclick="ShadowsocksConfig(this)">Shadowsocks</a>
-                                </div>
-                            </div>
+                        <label for="Data_protocol" class="col-sm-2 col-form-label">V2ray日志等级</label>
+                        <div class="col-sm-3">
+                            <select id="Data_protocol" class="form-control">
+                                {% for dp in dataProtocols %}
+                                <option value="{{ dp }}" 
+                                {% if level == Data.protocol %} 
+                                selected="selected" 
+                                {% endif %}>
+                                {{ dp }}</option>
+                                {% endfor%}
+                            </select>
                         </div>
                     </div>
                 </div>

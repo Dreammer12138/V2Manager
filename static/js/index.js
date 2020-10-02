@@ -1,11 +1,9 @@
 $(() => {
-    // 绑定下拉列表点击事件
-    var dropdownitem = $('a.dropdown-item')
-    for (var i = 0; i < dropdownitem.length; i++) {
-        $(dropdownitem[i]).click(function() {
-            droplistselected(this)
-        })
-    }
+    var dataProtocol = $('#Data_protocol')
+    dataProtocol.change(function() {
+        ShadowsocksConfig(this)
+    })
+
 
     $('#UuidUpdate').click(() => {
         updateUUID()
@@ -36,13 +34,13 @@ function updateConfig() {
     $.get('/updateConfig', {
         V2rayCorePath   : $('#V2rayCorePath').val(),
         V2rayLogPath    : $('#V2rayLogPath').val(),
-        LogLevel        : $('#loglevel').text().replace(/\n/g, '').replace(/ /g, ''),
+        LogLevel        : $('#loglevel').val(),
         Port            : $('#Port').val(),
-        Protocol        : $('#Protocol').text().replace(/\n/g, '').replace(/ /g, ''),
+        Protocol        : $('#Protocol').val(),
         UUID            : $('#UUID').val(),
-        DataProtocol    : $('#Data_protocol').text().replace(/\n/g, '').replace(/ /g, ''),
-        ShadowsocksID   : $('#Data_protocol').text().replace(/\n/g, '').replace(/ /g, '') === 'Vmess' ? '' : $('#ShadowsocksID').val(),
-        ShadowsocksPwd  : $('#Data_protocol').text().replace(/\n/g, '').replace(/ /g, '') === 'Vmess' ? '' : $('#ShadowsocksPwd').val()
+        DataProtocol    : $('#Data_protocol').val(),
+        ShadowsocksID   : $('#Data_protocol').val() === 'Vmess' ? '' : $('#ShadowsocksID').val(),
+        ShadowsocksPwd  : $('#Data_protocol').val() === 'Vmess' ? '' : $('#ShadowsocksPwd').val()
     }, (res) => {
         if (res['code'] == 0)
             alert('V2ray配置更新失败')
@@ -54,7 +52,7 @@ function updateConfig() {
 }
 
 function ShadowsocksConfig(t) {
-    if ($(t).text() === "Vmess")
+    if ($(t).val() === "Vmess")
         $('#Shadowsocks').fadeOut('fast')
     else 
         $('#Shadowsocks').fadeIn('fast')

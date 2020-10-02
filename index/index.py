@@ -19,6 +19,20 @@ def index(request):
         {'topage': 'status', 'title': '状态'}
     ]
 
+    # loglevels
+    content['levels'] = [
+        'Warning', 'Info', 'Error', 'Debug', 'None'
+    ]
+
+    # protocols
+    content['protocols'] = [
+        'tcp', 'mkcp'
+    ]
+
+    content['dataProtocols'] = [
+        'Vmess', 'Shadowsocks'
+    ]
+
     # V2rayConfig
     v2rayconf = V2rayConfig.objects.all()
     if len(v2rayconf) != 0:
