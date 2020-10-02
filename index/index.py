@@ -14,10 +14,10 @@ def index(request):
     content['scripts'] = js
     content['Data'] = {}
     content['Status'] = {}
-    #content['bars'] = [
-    #    {'topage': 'config'},
-    #    {'topage': 'status'}
-    #]
+    content['bars'] = [
+        {'topage': 'config'},
+        {'topage': 'status'}
+    ]
 
     # V2rayConfig
     v2rayconf = V2rayConfig.objects.all()
