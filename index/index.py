@@ -15,8 +15,8 @@ def index(request):
     content['Data'] = {}
     content['Status'] = {}
     content['bars'] = [
-        {'topage': 'config'},
-        {'topage': 'status'}
+        {'topage': 'config', 'title': '配置'},
+        {'topage': 'status', 'title': '状态'}
     ]
 
     # V2rayConfig
