@@ -1,5 +1,5 @@
 <template>
-    <div id="configGuide" class="bg-light col-6 p-5 d-flex rounded">
+    <div id="configGuide" class="bg-light col-7 p-5 d-flex rounded">
         <div class="display-4 d-flex align-items-center">
             <h4 class="display-4">V2Manager</h4>
         </div>
@@ -11,13 +11,13 @@
                         v-model="config.value"
                         v-if="config.type !== 'select'"
                         :type="config.type"
-                        class="form-control"
+                        class="form-control form-control-sm"
                         :id="config"
-                        :placeholder="config.value"
                 />
                 <select
+                        v-model="config.value"
                         v-else
-                        class="form-control"
+                        class="form-control form-control-sm"
                         :id="config">
                     <option v-for="item in config.items" :key="item">{{ item }}</option>
                 </select>
@@ -27,6 +27,7 @@
                         type="button"
                         class="btn btn-secondary rounded-circle p-0 m-0 iconfont iconlogin_loginjump_right m-3"
                         id="submit"
+                        @click="submit"
                 ></button>
             </div>
         </form>
@@ -34,7 +35,7 @@
 </template>
 
 <script>
-    import UUID from 'uuid/dist/v1';
+    //import UUID from 'uuid/dist/v1';
     export default {
         name: "ConfigGuide",
         data: function() {
@@ -45,13 +46,34 @@
                     V2rayLogLevel: { text: 'V2ray日志等级', type: 'select', items: ['Warning', 'Info', 'Error', 'Debug', 'None'], value: '' },
                     ListenPort: { text: '监听端口', type: 'text', value: '' },
                     Protocol: { text: '协议', type: 'select', items: ['tcp', 'mkcp'], value: '' },
-                    UUID: { text: 'UUID', type: 'text', value: '', readonly: true },
-                    dataProtocol: { text: '数据协议', type: 'text', value: '' }
+                    UUID: { text: 'UUID', type: 'text', value: '', readonly: true }
                 }
             }
         },
         created() {
-            this.configs.UUID.value = UUID();
+            var t = this;
+            this.$ajax.get('/api/getConfig').then(function(r) {
+                t.configs.V2rayCorePath.value = r.data.V2rayCorePath;
+                t.configs.V2rayLogPath.value = r.data.V2rayLogPath;
+                t.configs.V2rayLogLevel.value = r.data.V2rayLogLevel;
+                t.configs.ListenPort.value = r.data.ListenPort;
+                t.configs.Protocol.value = r.data.Protocol;
+                t.configs.UUID.value = r.data.UUID;
+            })
+        },
+        methods: {
+            submit() {
+                this.$ajax.post('/api/updateConfig', {
+                    configs: this.configs
+                }).them(res => {
+                    if (res.code === 1) {
+                        alert('配置已更新');
+                    }
+                    else if (res.code == 1) {
+                        alert('修改配置失败');
+                    }
+                });
+            }
         }
     }
 </script>
