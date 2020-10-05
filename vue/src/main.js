@@ -9,6 +9,8 @@ Vue.prototype.$ajax = axios
 
 Vue.config.productionTip = false
 
+Vue.config.devtools = true
+
 // add VueRouter
 Vue.use(VueRouter)
 

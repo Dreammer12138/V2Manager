@@ -28,13 +28,21 @@
         },
         methods: {
             login() {
+                var t = this;
                 this.$ajax.post('/api/login', {
-                    pwd: this.pwd
+                    pwd: t.pwd
                 }).then(function (response) {
-                    console.log(response);
+                    if (response.data.code == 0) return;
+                    sessionStorage.setItem('loginStatus', true);
+                    t.$router.push('home');
                 }).catch(function (error) {
                     console.error(error);
                 })
+            }
+        },
+        created() {
+            if (sessionStorage.getItem('loginStatus') == true) {
+                this.$router.push('home');
             }
         }
     }

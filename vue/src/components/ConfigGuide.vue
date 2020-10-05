@@ -65,14 +65,15 @@
             submit() {
                 this.$ajax.post('/api/updateConfig', {
                     configs: this.configs
-                }).them(res => {
-                    if (res.code === 1) {
+                }).then(res => {
+                    if (res.data.code === 1) {
                         alert('配置已更新');
                     }
-                    else if (res.code == 1) {
+                    else if (res.data.code == 1) {
                         alert('修改配置失败');
                     }
                 });
+                this.$router.push('home');
             }
         }
     }
