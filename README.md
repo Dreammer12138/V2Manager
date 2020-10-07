@@ -2,13 +2,13 @@
 
 V2Manager全称V2ray Manager，是一款用于服务器端的V2ray管理应用。
 
-V2Manager基于Django(Python)开发，以Web为主要形式的服务器应用，支持可视化操作、配置V2ray，方便新手使用。
+V2Manager已移植到NodeJS平台，支持可视化操作、配置V2ray。
 
 **V2Manager必须在Linux环境下运行（这年头不会还有人用WinServer搭梯子吧，不会吧不会吧）**
 
 ## 环境要求
 
-- Python 3.6.5 以上
+- Node JS
 - sqlite 3
 - wget
 - curl
@@ -22,7 +22,7 @@ V2Manager基于Django(Python)开发，以Web为主要形式的服务器应用，
 **以Debian为例**
 
 ```shell
-$ sudo apt install python3 sqlite3 wget curl bash -y
+$ sudo apt install nodejs sqlite3 wget curl bash -y
 ```
 
 ### 下载V2Manager
@@ -71,8 +71,9 @@ $ sudo bash go.sh
 运行以下代码初始化环境
 
 ```shell
-$ sudo chmod a+x begin.sh
-$ sudo bash begin.sh
+$ npm install -s
+$ npm run build
+$ npm run init
 ```
 
 ## 运行
@@ -80,17 +81,13 @@ $ sudo bash begin.sh
 安装好环境以后运行
 
 ```shell
-$ sudo python3 manage.py runserver 0.0.0.0:<port> --insecure
+$ npm run start
 ```
-
-- `<port>`是网站的访问端口，可以随意设置，但是请不要和其他进程的端口重复
-
-  例如`sudo python3 manage.py runserver 0.0.0.0:8000 --insecure`
 
 ## 访问
 
-浏览器打开`http://<你的服务器IP>:<你刚刚设置好的访问端口>`
+浏览器打开`http://<你的服务器IP>:3000`
 
-例如`http://192.168.1.1:8000`
+例如`http://192.168.1.1:3000`
 
 ![result](/doc/img/result.png)
