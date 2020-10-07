@@ -1,6 +1,16 @@
 import express = require('express');
 const router = express.Router();
-const child = require('child_process');
+import child = require('child_process');
+import process = require('process');
+import fs = require('fs');
+
+async function getPID() {
+    let PID;
+    child.exec('ps -ef | grep v2ray | grep -v grep | awk \'{print $2}\'', async (err, sto) => {
+        PID = sto;
+    })
+    return await PID;
+}
 
 import "reflect-metadata";
 import { createConnection } from "typeorm";
@@ -46,27 +56,24 @@ router.get('/getConfig', function (req, res, next) {
     })
 })
 
-router.get('/getStatus', function (req, res, next) {
-    var pid = '';
-    child.exec('ps -ef | grep v2ray | grep -v grep | awk \'{print $2}\'', (err, sto) => {
-        pid = sto;
-    })
-    if (pid !== '') res.send({StatusCode: 1});
+router.get('/getStatus', async function (req, res, next) {
+    var pid = await getPID();
+    if (await pid !== '') res.send({StatusCode: 1});
     else res.send({StatusCode: 0});
 })
 
-router.get('/getLog', function (req, res, next) {
-    var log = '';
+router.get('/getLog', async function (req, res, next) {
     var logPath = '';
     connect.then(async connection => {
         let configRespository = connection.getRepository(Config);
-        let configData = await configRespository.findOne(1);
-        logPath = configData.V2rayLogPath;
+        let configData = await (await configRespository.findOne(1)).V2rayLogPath;
+        let Log;
+        fs.readFile(configData + '/error.log', 'utf8', async (err, data) => {
+            if (err) throw err;
+            Log = await data;
+            res.send(Log);
+        })
     })
-    child.exec('cat ' + logPath + '/access.log', (err, sto) => {
-        log = sto;
-    })
-    res.send({V2rayLog:log});
 })
 
 export { router };
